@@ -43,7 +43,7 @@ body {
 }
 
 img {
-  max-height: 200px;
+  max-height: 400px;
   width: 100%;
   user-select: none;
 }
