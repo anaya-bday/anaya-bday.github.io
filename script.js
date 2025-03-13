@@ -18,7 +18,6 @@ class Paper {
   init(paper) {
     const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints;
 
-  
     const moveEvent = (e) => {
       let clientX, clientY;
 
@@ -60,7 +59,6 @@ class Paper {
       }
     };
 
-  
     const startEvent = (e) => {
       if (this.holdingPaper) return;
       this.holdingPaper = true;
@@ -106,23 +104,21 @@ class Paper {
   }
 }
 
-
 const papers = Array.from(document.querySelectorAll(".paper"));
 papers.forEach((paper) => {
   const p = new Paper();
   p.init(paper);
 });
 
-const audio = document.querySelector("audio");
+const audio = document.getElementById("bg-music");
 
 const enableAutoplay = () => {
   if (audio.paused) {
-    audio.play().catch((error) => {
+    audio.play().catch(() => {
       console.log("Autoplay blocked, waiting for interaction.");
     });
   }
 };
 
-// Enable autoplay when the user interacts
 document.addEventListener("click", enableAutoplay, { once: true });
 document.addEventListener("touchstart", enableAutoplay, { once: true });
