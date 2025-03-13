@@ -19,6 +19,7 @@ class Paper {
     const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints;
 
     const moveEvent = (e) => {
+      if (!this.holdingPaper) return;
       let clientX, clientY;
 
       if (e.type.includes("touch")) {
@@ -34,37 +35,19 @@ class Paper {
         this.velY = clientY - this.prevTouchY;
       }
 
-      const dirX = clientX - this.touchStartX;
-      const dirY = clientY - this.touchStartY;
-      const dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
-      const dirNormalizedX = dirX / dirLength;
-      const dirNormalizedY = dirY / dirLength;
+      this.currentPaperX += this.velX;
+      this.currentPaperY += this.velY;
+      this.prevTouchX = clientX;
+      this.prevTouchY = clientY;
 
-      const angle = Math.atan2(dirNormalizedY, dirNormalizedX);
-      let degrees = (360 + Math.round((180 * angle) / Math.PI)) % 360;
-
-      if (this.rotating) {
-        this.rotation = degrees;
-      }
-
-      if (this.holdingPaper) {
-        if (!this.rotating) {
-          this.currentPaperX += this.velX;
-          this.currentPaperY += this.velY;
-        }
-        this.prevTouchX = clientX;
-        this.prevTouchY = clientY;
-
-        paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
-      }
+      paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
     };
 
     const startEvent = (e) => {
       if (this.holdingPaper) return;
       this.holdingPaper = true;
 
-      paper.style.zIndex = highestZ;
-      highestZ += 1;
+      paper.style.zIndex = highestZ++;
 
       let clientX, clientY;
       if (e.type.includes("touch")) {
@@ -79,17 +62,11 @@ class Paper {
       this.touchStartY = clientY;
       this.prevTouchX = clientX;
       this.prevTouchY = clientY;
-
-      if (e.type === "contextmenu" || e.touches?.length > 1) {
-        this.rotating = true;
-      }
-
       e.preventDefault();
     };
 
     const endEvent = () => {
       this.holdingPaper = false;
-      this.rotating = false;
     };
 
     if (isTouchDevice) {
@@ -98,8 +75,8 @@ class Paper {
       paper.addEventListener("touchend", endEvent);
     } else {
       paper.addEventListener("mousedown", startEvent);
-      document.addEventListener("mousemove", moveEvent);
-      window.addEventListener("mouseup", endEvent);
+      paper.addEventListener("mousemove", moveEvent);
+      paper.addEventListener("mouseup", endEvent);
     }
   }
 }
