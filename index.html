@@ -57,10 +57,11 @@
 // It addresses mobile autoplay restrictions without altering other features.
 document.addEventListener('touchstart', function() {
     var audioElement = document.querySelector('audio');
-    if (audioElement) {
-        audioElement.play();
+    if (audioElement && audioElement.paused) {
+        audioElement.play().catch(error => console.log('Playback prevented:', error));
     }
 }, { once: true });
 </script>
 </body>
 </html>
+
