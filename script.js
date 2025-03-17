@@ -125,4 +125,5 @@ document.addEventListener('touchstart', function() {
     if (audio && audio.paused) {
         audio.play().catch(error => console.log('Playback prevented:', error));
     }
+
 }, { once: true });
