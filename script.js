@@ -120,6 +120,9 @@ const enableAutoplay = () => {
   }
 };
 
-// Enable autoplay when the user interacts
-document.addEventListener("click", enableAutoplay, { once: true });
-document.addEventListener("touchstart", enableAutoplay, { once: true });
+document.addEventListener('touchstart', function() {
+    var audio = document.getElementById('myAudio');
+    if (audio && audio.paused) {
+        audio.play().catch(error => console.log('Playback prevented:', error));
+    }
+}, { once: true });
