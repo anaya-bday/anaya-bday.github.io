@@ -39,7 +39,7 @@ body {
   padding: 50px;
 }
 .paper.image p {
-  font-size: 30px;
+  font-size: 10px;
 }
 
 img {
@@ -64,7 +64,7 @@ img {
 
 p {
   font-family: 'Zeyada';
-  font-size: 70px;
+  font-size: 30px;
   color: rgb(0,0,100);
   opacity: 0.75;
   user-select: none;
