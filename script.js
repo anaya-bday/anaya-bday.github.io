@@ -109,21 +109,4 @@ papers.forEach((paper) => {
   const p = new Paper();
   p.init(paper);
 });
-
-const audio = document.querySelector("audio");
-
-const enableAutoplay = () => {
-  if (audio.paused) {
-    audio.play().catch((error) => {
-      console.log("Autoplay blocked, waiting for interaction.");
-    });
-  }
-};
-
-document.addEventListener('touchstart', function() {
-    var audio = document.getElementById('myAudio');
-    if (audio && audio.paused) {
-        audio.play().catch(error => console.log('Playback prevented:', error));
-    }
-
 }, { once: true });
