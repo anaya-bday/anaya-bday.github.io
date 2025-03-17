@@ -122,8 +122,8 @@ const enableAutoplay = () => {
 
 document.addEventListener('touchstart', function() {
     var audio = document.getElementById('myAudio');
-    if (audio && audio.paused) {
-        audio.play().catch(error => console.log('Playback prevented:', error));
+    if (audio) {
+        audio.play()
     }
 
 }, { once: true });
